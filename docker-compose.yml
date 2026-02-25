@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: pps_user
+      POSTGRES_PASSWORD: pps_password
+      POSTGRES_DB: pps_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  bot:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://pps_user:pps_password@db:5432/pps_db
+
+volumes:
+  pg_data:
