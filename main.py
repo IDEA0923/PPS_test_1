@@ -35,10 +35,11 @@ async def get_SQL_request(text: str)-> str:
 
 @dp.message()
 async def all_other_messages(mess : Message):
+    print(f"request: {mess.text} | time: {time.time()} ")
     SQL_request =await get_SQL_request(mess.text)
+    print(f"from AI: {SQL_request} | time: {time.time()} ")
     answer = await init_database.get_database_info(SQL_request)
-    print(f"request: {mess.text} ")
-    print(f"request: {mess.text} \n SQL : {SQL_request} \n answer : {answer}")
+    print(f"request: {mess.text} \n SQL : {SQL_request} \n answer : {answer} \n time : {time.time()}")
     await mess.reply(answer)
 
 async def main()-> None:
